@@ -29,7 +29,7 @@ if (imagePath) {
 <Tag
   class={cn(
     className,
-    'relative rounded-2xl border border-border bg-primary-foreground px-5 py-3',
+    'relative rounded-2xl border border-border bg-primary-foreground p-5',
     href && 'transition-all hover:border-foreground/25 hover:shadow-sm',
   )}
   href={href}
@@ -39,7 +39,7 @@ if (imagePath) {
       <Image
         src={images[imagePath]()}
         alt={altText}
-        class={cn('mb-3 md:absolute md:mb-0', imageClass)}
+        class={cn('mb-3 rounded-lg md:absolute md:mb-0', imageClass)}
         loading='eager'
       />
     )
