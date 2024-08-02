@@ -29,6 +29,13 @@ env:
   # BUILD_PATH: subfolder
 
 jobs:
+  install:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
   build:
     name: Build
     runs-on: ubuntu-latest
@@ -58,17 +65,17 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: ${{ steps.detect-package-manager.outputs.manager }}
-          cache-dependency-path: ${{ env.BUILD_PATH }}/${{ steps.detect-package-manager.outputs.lockfile }}
+          cache: "pnpm"
+          cache-dependency-path: ${{ env.BUILD_PATH }}/"pnpm-lock.yaml"
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
       - name: Install dependencies
-        run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
+        run: "pnpm install"
         working-directory: ${{ env.BUILD_PATH }}
       - name: Build with Astro
         run: |
-          ${{ steps.detect-package-manager.outputs.runner }} astro build \
+          pnpx astro build \
             --site "${{ steps.pages.outputs.origin }}" \
             --base "${{ steps.pages.outputs.base_path }}"
         working-directory: ${{ env.BUILD_PATH }}
